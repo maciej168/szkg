@@ -92,6 +92,7 @@
     </dependencies>
 
     <build>
+        <finalName>SZKG</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
