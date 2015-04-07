@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * Created by Miko³aj on 2015-04-07.
+ * Created by Mikolaj on 2015-04-07.
  */
 public class GameDAOImpl implements GameDAO {
 

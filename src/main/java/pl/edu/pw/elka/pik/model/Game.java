@@ -1,7 +1,7 @@
 package pl.edu.pw.elka.pik.model;
 
 /**
- * Created by Miko³aj on 2015-04-07.
+ * Created by Mikolaj on 2015-04-07.
  */
 public class Game {
 
