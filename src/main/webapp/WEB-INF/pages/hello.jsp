@@ -12,5 +12,23 @@
     <p>{{name}}</p>
 </div>
 
+<div align="center">
+    <h1>Games List</h1>
+    <table border="1">
+        <th>No</th>
+        <th>Name</th>
+        <th>Description</th>
+
+        <c:forEach var="game" items="${gameList}" varStatus="status">
+            <tr>
+                <td>${status.index + 1}</td>
+                <td>${game.name}</td>
+                <td>${game.description}</td>
+
+            </tr>
+        </c:forEach>
+    </table>
+</div>
+
 </body>
 </html>
