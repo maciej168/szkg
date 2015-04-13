@@ -9,33 +9,55 @@
 
     <context:component-scan base-package="pl.edu.pw.elka.pik"/>
 
+    <!-- Getting Database properties -->
+    <context:property-placeholder location="classpath:hibernate.properties"/>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-
     <mvc:resources mapping="/angular/**" location="/WEB-INF/resources/angular-1.3.15/" />
     <mvc:resources mapping="/bootstrap/**" location="/WEB-INF/resources/bootstrap-3.3.4/" />
     <mvc:annotation-driven />
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://pik.cmjmsy3dpzpx.us-west-2.rds.amazonaws.com:3306/pik?autoReconnect=true" />
-        <property name="username" value="pik" />
-        <property name="password" value="Pik5_" />
+    <!-- DataSource -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${database.driverClass}"/>
+        <property name="jdbcUrl" value="${database.url}"/>
+        <property name="user" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+
+        <property name="acquireIncrement" value="${connection.acquireIncrement}"/>
+        <property name="minPoolSize" value="${connection.minPoolSize}"/>
+        <property name="maxPoolSize" value="${connection.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${connection.maxIdleTime}"/>
     </bean>
 
+    <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="file:src/main/resources/hibernate.cfg.xml" />
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>Game.hbm.xml</value>
+            </list>
+        </property>
     </bean>
 
-    <tx:annotation-driven />
+    <!-- Transaction -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="gameDAO" class="pl.edu.pw.elka.pik.dao.GameDAOImpl">
         <constructor-arg>
