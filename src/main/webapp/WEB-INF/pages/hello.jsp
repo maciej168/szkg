@@ -22,8 +22,8 @@
         <c:forEach var="game" items="${gameList}" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
-                <td>${user.name}</td>
-                <td>${user.description}</td>
+                <td>${game.name}</td>
+                <td>${game.description}</td>
 
             </tr>
         </c:forEach>
