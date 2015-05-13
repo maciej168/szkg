@@ -41,6 +41,8 @@ User Stories
 6. Po wybraniu konkretnej kategorii pojawiają się szczegóły danej kategorii wraz z opcją edycji i usunięcia.
 7. Każdą grę można przypisać do dowolnej ilości zdefiniowanych kategorii.
 
+Podział na ekrany
+---------------
 ![alt tag](https://slack-files.com/files-tmb/T03PZ3B5A-F04PR43UJ-edc4098605/pik-szkg-zadania__1__1024.png)
 
 Materiały, tutoriale
