@@ -13,10 +13,10 @@ Workflow
 
 Systemy wspomagajace tworzenie kodu
 --------------
-Jira - http://pik.eiv.pl/jira ( Backlog projektu i zarządzanie zadaniami )
-Sonar - http://pik.eiv.pl/sonar ( Analiza jakości kodu )
-Jenkins - http://pik.eiv.pl/jenkins ( Ciągła integracja i testowanie )
-Elasticbeanstalk http://pik.eiv.pl ( Serwer aplikacyjny na tomcat 8 )
+1. Jira - http://pik.eiv.pl/jira ( Backlog projektu i zarządzanie zadaniami )
+2. Sonar - http://pik.eiv.pl/sonar ( Analiza jakości kodu )
+3. Jenkins - http://pik.eiv.pl/jenkins ( Ciągła integracja i testowanie )
+4. Elasticbeanstalk http://pik.eiv.pl ( Serwer aplikacyjny na tomcat 8 )
 
 Srodowisko aplikacyjne
 --------------
