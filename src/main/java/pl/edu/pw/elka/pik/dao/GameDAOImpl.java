@@ -50,6 +50,7 @@ public class GameDAOImpl implements GameDAO {
     {
         if (gamesList.size() <= to ) trash();
         System.out.println(gamesList.subList(from, to).size());
+        
         return gamesList.subList(from, to);
     }
 
