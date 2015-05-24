@@ -1,10 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Komatta
-  Date: 2015-05-20
-  Time: 21:33
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <style>
     #custom-bootstrap-menu.navbar-default .navbar-brand {
         color: rgba(0, 0, 0, 1);
@@ -63,13 +58,14 @@
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="/">Home</a>
+
+                <li><a href="/"><spring:message code="header.home"/></a>
                 </li>
-                <li><a href="/gameList">Lista Gier</a>
+                <li><a href="/gameList"><spring:message code="header.game.list"/></a>
                 </li>
-                <li><a href="/wishList">Lista Życzeń</a>
+                <li><a href="/wishList"><spring:message code="header.wish.list"/></a>
                 </li>
-                <li><a href="/category">Kategorie</a>
+                <li><a href="/category"><spring:message code="header.category"/></a>
                 </li>
             </ul>
         </div>
