@@ -17,10 +17,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -50,11 +46,7 @@ public class GameListController extends BaseController {
     @RequestMapping(value = "/getGameList")
     public void getGameList(@RequestParam("pageNum") Integer pageNum, HttpServletRequest request, HttpServletResponse response) throws IOException {
         LOGGER.severe("getGameList");
-        List<GameSimpleItem> listGames = null;
-
-        LOGGER.severe("from: " + (pageNum - 1) * GAMES_PER_PAGE + ", to: " +pageNum * GAMES_PER_PAGE);
-
-        listGames = gameDAO.getGameSimpleItem((pageNum - 1) * GAMES_PER_PAGE, pageNum * GAMES_PER_PAGE);
+        List<GameSimpleItem> listGames = gameDAO.getGameSimpleItem((pageNum - 1) * GAMES_PER_PAGE, pageNum * GAMES_PER_PAGE);
         write(response.getOutputStream(), listGames);
     }
 
@@ -62,14 +54,11 @@ public class GameListController extends BaseController {
     public void showImage(@RequestParam("gameId") Integer gameItemId, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {
         byte[] image = gameDAO.getGameImage(gameItemId);
-        if (image != null)
-        {
+        if (image != null) {
             response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
             response.getOutputStream().write(image);
             response.getOutputStream().close();
-        }
-        else
-        {
+        } else {
             throw new NoSuchRequestHandlingMethodException(request);
         }
     }
@@ -98,92 +87,13 @@ public class GameListController extends BaseController {
                             @RequestParam(value = "gameDescription", required = false) String gameDescription,
                             @RequestParam(value = "file", required = false) MultipartFile file,
                             HttpServletResponse response) throws IOException {
-
-        //LOGGER.severe("image");
-        //LOGGER.severe("isMultipartContent: " + ServletFileUpload.isMultipartContent(request));
-        //LOGGER.severe("ServletContext: " + (context != null));
-
-        LOGGER.severe("gameId: " + gameId);
-        LOGGER.severe("gameTitle: " + gameTitle);
-        if (gameCategory != null)
-        {
-            LOGGER.severe("gameCategory: " + gameCategory.size());
-            for (int cat : gameCategory)
-            {
-                LOGGER.severe("gameCategory: " + cat);
-            }
-        }
-
-        LOGGER.severe("gameDescription: " + gameDescription);
-        //LOGGER.severe("ServletContext: " + (context != null));
-        if (file != null && !file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("D:/dupa.jpg")));
-                stream.write(bytes);
-                stream.close();
-                //return "You successfully uploaded " + name + "!";
-            } catch (Exception e) {
-                //return "You failed to upload " + name + " => " + e.getMessage();
-            }
+        if (gameId == -1) {
+            gameId = gameDAO.createGame(gameTitle, gameCategory, gameDescription, file.getBytes());
         } else {
-            //return "You failed to upload " + name + " because the file was empty.";
+            gameDAO.updateGame(gameId, gameTitle, gameCategory, gameDescription, file.getBytes());
         }
-
         GameDetailItem detail = gameDAO.getGameDetail(gameId);
         write(response.getOutputStream(), detail);
-
-
-
-        /*
-        for (Part p : request.getParts())
-        {
-            LOGGER.severe("p.getName() " + p.getName());
-        }
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        // maximum size that will be stored in memory
-        factory.setSizeThreshold(1024 * 1024);
-        // Location to save data that is larger than maxMemSize.
-        factory.setRepository(new File("c:\\temp"));
-
-        // Create a new file upload handler
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        // maximum file size to be uploaded.
-        upload.setSizeMax(1024 * 1024);
-
-
-        // Parse the request to get file items.
-        //List fileItems = upload.parseRequest();
-
-
-        // Process the uploaded file items
-        FileItemIterator i = upload.getItemIterator(request);
-
-        while (i.hasNext()) {
-            FileItem fi = (FileItem) i.next();
-            LOGGER.severe("FileItem: " + fi.getName());
-
-        }
-
-
-        //File repository = (File) context.getAttribute("javax.servlet.context.tempdir");
-        //factory.setRepository(repository);
-
-// Create a new file upload handler
-        //DiskFileItemFactory factory = new DiskFileItemFactory();
-        //ServletFileUpload upload = new ServletFileUpload(factory);
-
-
-// Parse the request
-        //List<FileItem> items = upload.parseRequest(request);
-        //LOGGER.severe("items.size(): " + items.size());
-        //for (FileItem item : items)
-        //{
-        //    LOGGER.severe("item.getName(): " + item.getName());
-        //}
-*/
     }
 
 }

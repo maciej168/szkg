@@ -3,8 +3,7 @@ package pl.edu.pw.elka.pik.model;
 /**
  * Created by Komatta on 2015-05-22.
  */
-public class CategorySimpleItem
-{
+public class CategorySimpleItem {
     private int id;
     private String name;
     private boolean selected;

@@ -243,15 +243,6 @@
         changeEditModalButtons(!enter);
     };
 
-    function uploadComplete(evt) {
-        /* This event is raised when the server send back a response */
-        alert("completed")
-    }
-
-    function uploadFailed(evt) {
-        alert("There was an error attempting to upload the file.")
-    }
-
     var app = angular.module('GameList', []);
     app.controller('GameListController', function($scope, $http, $filter)
     {
@@ -289,9 +280,9 @@
         $scope.editGame = function(gameId)
         {
             clearEditModal();
-            $scope.editingGameId = gameId;
             if (gameId == 'new')
             {
+                $scope.editingGameId = gameId;
                 enterEdit(true);
             }
             else
@@ -319,13 +310,6 @@
                 $http.get('gameList/getGameDetail?gameId=' + gameId).
                         success(function (data, status, headers, config)
                         {
-                            //enterEdit(true);
-                            //$('#gameTitle').val(data.title);
-                            //$('#gameDescription').val(data.description);
-                            //$('#gameCategory').selectpicker('val', data.category);
-                            //$('#gameImage').attr('src', 'gameList/getGameImge?gameId=' + data.id);
-                            //$('#gameImage').show();
-                            //enterEdit(false);
                             $scope.setDetailParameterValue(data);
                         }).
                         error(function (data, status, headers, config) {
@@ -337,6 +321,7 @@
         $scope.setDetailParameterValue = function(data)
         {
             enterEdit(true);
+            $scope.editingGameId = data.id;
             $('#gameTitle').val(data.title);
             $('#gameDescription').val(data.description);
             $('#gameCategory').selectpicker('val', data.category);
@@ -348,7 +333,6 @@
 
         $scope.submit = function()
         {
-            console.log("Submit");
             if (validateEditModal())
             {
                 $scope.uploadFile();
@@ -366,25 +350,19 @@
             else {
                 fd.append("gameId", $scope.editingGameId)
             }
-            //alert(document.getElementById("gameTitle").value);
-
             fd.append("gameTitle", document.getElementById("gameTitle").value);
             fd.append("gameCategory", $('#gameCategory').val());
             fd.append("gameDescription", document.getElementById("gameDescription").value);
 
             var xhr = new XMLHttpRequest();
-            //xhr.addEventListener("load", uploadComplete, false);
-            //xhr.addEventListener("error", uploadFailed, false);
             xhr.open("POST", "gameList/saveGame", false);
             xhr.send(fd);
-
             var jsonResponse = JSON.parse(xhr.responseText);
-            console.log(jsonResponse.id);
             $scope.setDetailParameterValue(jsonResponse);
         };
 
-        $scope.readURL = function (input) {
-
+        $scope.readURL = function (input)
+        {
             if (input.files && input.files[0])
             {
                 $scope.fileToUpload = input.files[0];
@@ -409,8 +387,8 @@
                     });
         }
 
-        $scope.prevPage = function (input) {
-            console.log("PrevPage");
+        $scope.prevPage = function (input)
+        {
             if ( $scope.currPage > 1)
             {
                 $scope.currPage =  $scope.currPage - 1;
@@ -418,8 +396,8 @@
             }
         };
 
-        $scope.nextPage = function (input) {
-            console.log("NextPage");
+        $scope.nextPage = function (input)
+        {
             if ( $scope.gameList.length == $scope.gamesPerPage)
             {
                 $scope.currPage =  $scope.currPage + 1;
@@ -428,7 +406,6 @@
         };
 
         $scope.reloadGameList();
-
         $http.get('gameList/getCategoryList').
                 success(function(data, status, headers, config) {
                     $scope.categoryList = data;
@@ -436,18 +413,12 @@
                 error(function(data, status, headers, config) {
                     alert('<spring:message code="game.list.error.message"/>');
                 });
-
         $('#gameImageFile').change(function()
         {
             $scope.readURL(this);
         });
-
         $('#gameCategory').selectpicker();
         clearEditModal();
-
-
-
-
     });
 </script>
 </body>

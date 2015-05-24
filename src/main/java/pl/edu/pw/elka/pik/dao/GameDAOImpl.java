@@ -46,25 +46,21 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
-    public List<GameSimpleItem> getGameSimpleItem(int from, int to)
-    {
-        if (gamesList.size() <= to ) trash();
+    public List<GameSimpleItem> getGameSimpleItem(int from, int to) {
+        if (gamesList.size() <= to) trash();
         System.out.println(gamesList.subList(from, to).size());
-        
+
         return gamesList.subList(from, to);
     }
 
     @Override
-    public int getGameSimpleItemCount()
-    {
+    public int getGameSimpleItemCount() {
         return gamesList.size();
     }
 
 
-
     @Override
-    public byte[] getGameImage(int gameID)
-    {
+    public byte[] getGameImage(int gameID) {
         //todo
         byte[] imageInByte = null;
         if (gameID > 0) {
@@ -91,13 +87,10 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
-    public boolean deleteGame(int gameId)
-    {
+    public boolean deleteGame(int gameId) {
         boolean response = false;
-        for (GameSimpleItem item : gamesList)
-        {
-            if (item.getId() == gameId)
-            {
+        for (GameSimpleItem item : gamesList) {
+            if (item.getId() == gameId) {
                 response = gamesList.remove(item);
                 break;
             }
@@ -105,25 +98,11 @@ public class GameDAOImpl implements GameDAO {
         return response;
     }
 
-    private void trash()
-    {
-        System.out.println("Trash");
-        for (int i = 0; i < 25; i++) {
-            GameSimpleItem g = new GameSimpleItem();
-            g.setId(i);
-            g.setTitle("Name from " + i);
-            gamesList.add(g);
-        }
-    }
-
     @Override
-    public GameDetailItem getGameDetail(int gameId)
-    {
+    public GameDetailItem getGameDetail(int gameId) {
         GameDetailItem detail = new GameDetailItem();
-        for (GameSimpleItem item : gamesList)
-        {
-            if (item.getId() == gameId)
-            {
+        for (GameSimpleItem item : gamesList) {
+            if (item.getId() == gameId) {
                 detail.setId(gameId);
                 detail.setTitle(item.getTitle());
                 detail.setDescription("Life Is Strange is a five part episodic game that sets out to revolutionise story based choice and consequence games by allowing the player to rewind time and affect the past, present and future. \n" +
@@ -154,5 +133,26 @@ public class GameDAOImpl implements GameDAO {
         categorys.add(c2);
         categorys.add(c3);
         return categorys;
+    }
+
+    @Override
+    public int createGame(String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image) {
+        return 0;
+    }
+
+    @Override
+    public void updateGame(int gameId, String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image) {
+
+    }
+
+    //todo metoda do usunięcia
+    private void trash() {
+        System.out.println("Trash");
+        for (int i = 0; i < 25; i++) {
+            GameSimpleItem g = new GameSimpleItem();
+            g.setId(i);
+            g.setTitle("Name from " + i);
+            gamesList.add(g);
+        }
     }
 }

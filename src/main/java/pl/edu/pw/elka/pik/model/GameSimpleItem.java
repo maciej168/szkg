@@ -3,8 +3,7 @@ package pl.edu.pw.elka.pik.model;
 /**
  * Created by Komatta on 2015-05-21.
  */
-public class GameSimpleItem
-{
+public class GameSimpleItem {
     private int id;
     private String title;
 
