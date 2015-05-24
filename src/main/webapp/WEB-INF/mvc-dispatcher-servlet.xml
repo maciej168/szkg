@@ -12,6 +12,8 @@
     <!-- Getting Database properties -->
     <context:property-placeholder location="classpath:hibernate.properties"/>
 
+    <context:annotation-config />
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
@@ -19,6 +21,9 @@
 
     <mvc:resources mapping="/angular/**" location="/WEB-INF/resources/angular-1.3.15/" />
     <mvc:resources mapping="/bootstrap/**" location="/WEB-INF/resources/bootstrap-3.3.4/" />
+    <mvc:resources mapping="/jquery/**" location="/WEB-INF/resources/jquery-2.1.4/" />
+    <mvc:resources mapping="/bootstrap-filestyle/**" location="/WEB-INF/resources/bootstrap-filestyle/" />
+
     <mvc:annotation-driven />
 
     <!-- DataSource -->
@@ -32,6 +37,25 @@
         <property name="minPoolSize" value="${connection.minPoolSize}"/>
         <property name="maxPoolSize" value="${connection.maxPoolSize}"/>
         <property name="maxIdleTime" value="${connection.maxIdleTime}"/>
+    </bean>
+
+
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000"/>
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="pl_PL" />
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+        <property name="defaultEncoding" value="UTF-8" />
     </bean>
 
     <!-- Hibernate SessionFactory -->
