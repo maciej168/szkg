@@ -13,10 +13,10 @@ Workflow
 
 Systemy wspomagajace tworzenie kodu
 --------------
-Jira - http://pik.eiv.pl/jira ( Backlog projektu i zarządzanie zadaniami )
-Sonar - http://pik.eiv.pl/sonar ( Analiza jakości kodu )
-Jenkins - http://pik.eiv.pl/jenkins ( Ciągła integracja i testowanie )
-Elasticbeanstalk http://pik.eiv.pl ( Serwer aplikacyjny na tomcat 8 )
+1. Jira - http://pik.eiv.pl/jira ( Backlog projektu i zarządzanie zadaniami )
+2. Sonar - http://pik.eiv.pl/sonar ( Analiza jakości kodu )
+3. Jenkins - http://pik.eiv.pl/jenkins ( Ciągła integracja i testowanie )
+4. Elasticbeanstalk http://pik.eiv.pl ( Serwer aplikacyjny na tomcat 8 )
 
 Srodowisko aplikacyjne
 --------------
@@ -40,6 +40,10 @@ User Stories
 5. Po przejściu do kategorii wyświetla się lista kategorii wraz z możliwością dodawania.
 6. Po wybraniu konkretnej kategorii pojawiają się szczegóły danej kategorii wraz z opcją edycji i usunięcia.
 7. Każdą grę można przypisać do dowolnej ilości zdefiniowanych kategorii.
+
+Podział na ekrany
+---------------
+![alt tag](https://slack-files.com/files-tmb/T03PZ3B5A-F04PR43UJ-edc4098605/pik-szkg-zadania__1__1024.png)
 
 Materiały, tutoriale
 -------------

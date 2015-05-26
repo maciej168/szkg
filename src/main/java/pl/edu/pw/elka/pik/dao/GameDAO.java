@@ -1,6 +1,9 @@
 package pl.edu.pw.elka.pik.dao;
 
+import pl.edu.pw.elka.pik.model.CategorySimpleItem;
 import pl.edu.pw.elka.pik.model.Game;
+import pl.edu.pw.elka.pik.model.GameDetailItem;
+import pl.edu.pw.elka.pik.model.GameSimpleItem;
 
 import java.util.List;
 
@@ -9,4 +12,20 @@ import java.util.List;
  */
 public interface GameDAO {
     List<Game> list();
+
+    List<GameSimpleItem> getGameSimpleItem(int from, int to);
+
+    int getGameSimpleItemCount();
+
+    byte[] getGameImage(int gameID);
+
+    boolean deleteGame(int gameId);
+
+    GameDetailItem getGameDetail(int gameId);
+
+    List<CategorySimpleItem> getCategoryList();
+
+    int createGame(String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image);
+
+    void updateGame(int gameId, String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image);
 }

@@ -15,4 +15,9 @@
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/loginDispacher-servlet.xml</param-value>
+    </init-param>
 </web-app>
