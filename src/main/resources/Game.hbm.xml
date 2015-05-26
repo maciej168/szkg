@@ -3,21 +3,31 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="pl.edu.pw.elka.pik.model">
+
     <class name="pl.edu.pw.elka.pik.model.db.Game" table="Games" >
-        <id name="id" column="id" type="java.lang.Integer">
+        <id name="id" column="id" >
             <generator class="native"/>
         </id>
-        <property name="name" column="name" type="java.lang.String" />
-        <property name="description" column="description" type="java.lang.String" />
+        <property name="name" column="name" />
+        <property name="description" column="description" />
         <set name="categories" table="GameCategories" lazy="true" fetch="select" cascade="all">
             <key column="game_id" not-null="true" />
             <many-to-many entity-name="pl.edu.pw.elka.pik.model.db.Category" column="category_id" not-found="exception"/>
         </set>
     </class>
+
     <class name="pl.edu.pw.elka.pik.model.db.Category" table="Categories" >
-        <id name="id" column="id" type="java.lang.Integer">
+        <id name="id" column="id" >
             <generator class="native"/>
         </id>
-        <property name="name" column="name" type="java.lang.String" />
+        <property name="name" column="name" />
     </class>
+
+    <!-- TODO wprowadzić relację z db.Game i zastąpić delete/insert/update w GameDAOImpl -->
+    <!-- Obecne rozwiązanie jest uproszczone ze względu na nieznalezienie lepszego rozwiązania na przestrzeni 4h -->
+    <class name="pl.edu.pw.elka.pik.model.db.GameImage" table="GameImages">
+        <id name="gameId" column="game_id" />
+        <property name="image" column="image" />
+    </class>
+
 </hibernate-mapping>

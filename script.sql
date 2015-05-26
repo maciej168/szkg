@@ -21,3 +21,11 @@ CREATE TABLE `GameCategories` (
   CONSTRAINT `FK_GAME_ID` FOREIGN KEY (`game_id`) REFERENCES `Games` (`id`)
 ) DEFAULT CHARSET=utf8;
 commit;
+
+CREATE TABLE `GameImages` (
+  `game_id` int(5) unsigned NOT NULL,
+  `image` BLOB,
+  PRIMARY KEY (`game_id`),
+  CONSTRAINT `FK_IMG_GAME_ID` FOREIGN KEY (`game_id`) REFERENCES `Games` (`id`)
+) DEFAULT CHARSET=utf8;
+commit;

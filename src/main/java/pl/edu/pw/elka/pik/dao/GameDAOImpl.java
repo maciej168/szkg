@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pw.elka.pik.model.*;
 import pl.edu.pw.elka.pik.model.db.Category;
 import pl.edu.pw.elka.pik.model.db.Game;
+import pl.edu.pw.elka.pik.model.db.GameImage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by Mikolaj on 2015-04-07.
+ * Hibernated by MM
  */
 public class GameDAOImpl implements GameDAO {
 
@@ -65,10 +67,15 @@ public class GameDAOImpl implements GameDAO {
 
 
     @Override
+    @Transactional
     public byte[] getGameImage(int gameID) {
-        //todo
+        GameImage gameImage = (GameImage) sessionFactory.getCurrentSession()
+                .createCriteria(GameImage.class)
+                .add(Restrictions.eq("gameId",gameID))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
+
         byte[] imageInByte = null;
-        if (gameID > 0) {
+        if (gameImage == null || gameImage.getImage() == null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 InputStream in = this.getClass().getClassLoader().getResourceAsStream("placeholder.jpg");
@@ -88,6 +95,8 @@ public class GameDAOImpl implements GameDAO {
                     LOGGER.log(Level.SEVERE, "Close", e);
                 }
             }
+        } else {
+            imageInByte = gameImage.getImage();
         }
         return imageInByte;
     }
@@ -97,10 +106,14 @@ public class GameDAOImpl implements GameDAO {
     public boolean deleteGame(int gameId) {
         boolean response = false;
         try {
+            GameImage gameImage = new GameImage();
+            gameImage.setGameId(gameId);
+            sessionFactory.getCurrentSession().delete(gameImage);
+
             Game game = new Game();
             game.setId(gameId);
             sessionFactory.getCurrentSession().delete(game);
-            //TODO image
+
             response = true;
         }catch (Exception e){
             LOGGER.warning("Error in deleteGame - " + e.getMessage());
@@ -162,9 +175,14 @@ public class GameDAOImpl implements GameDAO {
         game.setDescription(gameDescription);
         game.setName(gameTitle);
         game.setCategories(getGameCategories(gameCategory));
+
+        GameImage gameImage = new GameImage();
+        gameImage.setImage(image);
+
         try{
             sessionFactory.getCurrentSession().save(game);
-            //TODO image
+            gameImage.setGameId(game.getId());
+            sessionFactory.getCurrentSession().save(gameImage);
         }catch (Exception e){
             LOGGER.warning("Error in createGame - " + e.getMessage());
         }
@@ -179,9 +197,15 @@ public class GameDAOImpl implements GameDAO {
         game.setName(gameTitle);
         game.setDescription(gameDescription);
         game.setCategories(getGameCategories(gameCategory));
+
+        GameImage gameImage = new GameImage();
+        gameImage.setGameId(gameId);
+        gameImage.setImage(image);
+
         try {
             sessionFactory.getCurrentSession().update(game);
-            //TODO image
+            gameImage.setGameId(game.getId());
+            sessionFactory.getCurrentSession().saveOrUpdate(gameImage);
         }catch (Exception e){
             LOGGER.warning("Error in updateGame - " + e.getMessage());
         }
