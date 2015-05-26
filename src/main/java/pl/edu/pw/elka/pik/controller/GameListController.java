@@ -87,10 +87,11 @@ public class GameListController extends BaseController {
                             @RequestParam(value = "gameDescription", required = false) String gameDescription,
                             @RequestParam(value = "file", required = false) MultipartFile file,
                             HttpServletResponse response) throws IOException {
+        byte[] img = file == null?null:file.getBytes();
         if (gameId == -1) {
-            gameId = gameDAO.createGame(gameTitle, gameCategory, gameDescription, file.getBytes());
+            gameId = gameDAO.createGame(gameTitle, gameCategory, gameDescription, img);
         } else {
-            gameDAO.updateGame(gameId, gameTitle, gameCategory, gameDescription, file.getBytes());
+            gameDAO.updateGame(gameId, gameTitle, gameCategory, gameDescription, img);
         }
         GameDetailItem detail = gameDAO.getGameDetail(gameId);
         write(response.getOutputStream(), detail);

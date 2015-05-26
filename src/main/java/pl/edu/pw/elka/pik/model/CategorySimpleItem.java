@@ -1,12 +1,20 @@
 package pl.edu.pw.elka.pik.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Komatta on 2015-05-22.
  */
-public class CategorySimpleItem {
+public class CategorySimpleItem implements Serializable {
     private int id;
     private String name;
     private boolean selected;
+
+    public CategorySimpleItem(){}
+    public CategorySimpleItem(Category cat){
+        setId(cat.getId());
+        setName(cat.getName());
+    }
 
     public String getName() {
         return name;

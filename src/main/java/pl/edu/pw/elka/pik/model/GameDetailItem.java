@@ -1,12 +1,13 @@
 package pl.edu.pw.elka.pik.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Komatta on 2015-05-22.
  */
-public class GameDetailItem extends GameSimpleItem {
+public class GameDetailItem extends GameSimpleItem implements Serializable   {
     String description;
     List<Integer> categorys;
 

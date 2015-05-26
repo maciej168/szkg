@@ -1,11 +1,19 @@
 package pl.edu.pw.elka.pik.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Komatta on 2015-05-21.
  */
-public class GameSimpleItem {
+public class GameSimpleItem implements Serializable{
     private int id;
     private String title;
+
+    public GameSimpleItem(){}
+    public GameSimpleItem(Game game){
+        setId(game.getId());
+        setTitle(game.getName());
+    }
 
     public int getId() {
         return id;

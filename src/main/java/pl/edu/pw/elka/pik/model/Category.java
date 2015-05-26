@@ -3,13 +3,11 @@ package pl.edu.pw.elka.pik.model;
 import java.io.Serializable;
 
 /**
- * Created by Mikolaj on 2015-04-07.
+ * Created by mastah on 2015-05-26.
  */
-public class Game implements Serializable{
-
-    private int id;
+public class Category implements Serializable {
+    private int id = 0;
     private String name;
-    private String description;
 
     public int getId() {
         return id;
@@ -25,13 +23,5 @@ public class Game implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }
