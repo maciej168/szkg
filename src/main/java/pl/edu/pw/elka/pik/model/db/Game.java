@@ -1,6 +1,7 @@
-package pl.edu.pw.elka.pik.model;
+package pl.edu.pw.elka.pik.model.db;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by Mikolaj on 2015-04-07.
@@ -10,6 +11,7 @@ public class Game implements Serializable{
     private int id;
     private String name;
     private String description;
+    private Set<Category> categories;
 
     public int getId() {
         return id;
@@ -33,5 +35,13 @@ public class Game implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

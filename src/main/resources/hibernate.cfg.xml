@@ -9,6 +9,5 @@
            <!--<property name="hibernate.connection.datasource">java:comp/env/jdbc/mysql</property>-->
            <property name="hibernate.current_session_context_class">thread</property>
            <mapping resource="Game.hbm.xml"/>
-           <mapping resource="Category.hbm.xml"/>
        </session-factory>
 </hibernate-configuration>

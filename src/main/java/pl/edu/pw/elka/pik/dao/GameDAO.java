@@ -1,7 +1,7 @@
 package pl.edu.pw.elka.pik.dao;
 
 import pl.edu.pw.elka.pik.model.CategorySimpleItem;
-import pl.edu.pw.elka.pik.model.Game;
+import pl.edu.pw.elka.pik.model.db.Game;
 import pl.edu.pw.elka.pik.model.GameDetailItem;
 import pl.edu.pw.elka.pik.model.GameSimpleItem;
 

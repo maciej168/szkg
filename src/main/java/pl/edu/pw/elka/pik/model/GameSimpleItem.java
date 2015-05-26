@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.pik.model;
 
+import pl.edu.pw.elka.pik.model.db.Game;
+
 import java.io.Serializable;
 
 /**

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pl.edu.pw.elka.pik.dao.GameDAO;
-import pl.edu.pw.elka.pik.model.Game;
+import pl.edu.pw.elka.pik.model.db.Game;
 
 import java.util.List;
 

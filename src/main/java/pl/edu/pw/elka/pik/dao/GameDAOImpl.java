@@ -5,12 +5,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pw.elka.pik.model.*;
+import pl.edu.pw.elka.pik.model.db.Category;
+import pl.edu.pw.elka.pik.model.db.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -99,6 +100,7 @@ public class GameDAOImpl implements GameDAO {
             Game game = new Game();
             game.setId(gameId);
             sessionFactory.getCurrentSession().delete(game);
+            //TODO image
             response = true;
         }catch (Exception e){
             LOGGER.warning("Error in deleteGame - " + e.getMessage());
@@ -117,43 +119,40 @@ public class GameDAOImpl implements GameDAO {
         GameDetailItem detailItem = new GameDetailItem();
 
         if(game != null) {
+            detailItem.setId(game.getId());
+            detailItem.setTitle(game.getName());
             detailItem.setDescription(game.getDescription());
+
+            List<Integer> cats = new ArrayList<Integer>();
+            for(Category c : game.getCategories()){
+                cats.add(c.getId());
+            }
+            detailItem.setCategory(cats);
         }
 
-        List<Integer> category = new ArrayList<Integer>();//TODO
-        category.add(1);
-        category.add(2);
-
-        detailItem.getCategory().addAll(category);
         return detailItem;
     }
 
     @Override
     @Transactional
     public List<CategorySimpleItem> getCategoryList() {
-//        List<Category> ctg = sessionFactory.getCurrentSession()
-//                .createCriteria(Category.class)
-//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-//
-//        List<CategorySimpleItem> categorys = new ArrayList<CategorySimpleItem>();
-//        for(Category c : ctg){
-//            categorys.add(new CategorySimpleItem(c));
-//        }
+        List<Category> ctg = sessionFactory.getCurrentSession()
+                .createCriteria(Category.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
         List<CategorySimpleItem> categorys = new ArrayList<CategorySimpleItem>();
-        CategorySimpleItem c1 = new CategorySimpleItem();
-        c1.setId(1);
-        c1.setName("Horror");
-        CategorySimpleItem c2 = new CategorySimpleItem();
-        c2.setId(2);
-        c2.setName("RPG");
-        CategorySimpleItem c3 = new CategorySimpleItem();
-        c3.setId(3);
-        c3.setName("Przygodowa");
-        categorys.add(c1);
-        categorys.add(c2);
-        categorys.add(c3);
+        for(Category c : ctg){
+            categorys.add(new CategorySimpleItem(c));
+        }
         return categorys;
+    }
+
+    private Set<Category> getGameCategories(Collection<Integer> categoryIds){
+        List<Category> ctg = sessionFactory.getCurrentSession()
+                .createCriteria(Category.class)
+                .add(Restrictions.in("id",categoryIds))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        return new HashSet<Category>(ctg);
     }
 
     @Override
@@ -162,9 +161,9 @@ public class GameDAOImpl implements GameDAO {
         Game game = new Game();
         game.setDescription(gameDescription);
         game.setName(gameTitle);
+        game.setCategories(getGameCategories(gameCategory));
         try{
             sessionFactory.getCurrentSession().save(game);
-            //TODO categories
             //TODO image
         }catch (Exception e){
             LOGGER.warning("Error in createGame - " + e.getMessage());
@@ -179,9 +178,9 @@ public class GameDAOImpl implements GameDAO {
         game.setId(gameId);
         game.setName(gameTitle);
         game.setDescription(gameDescription);
+        game.setCategories(getGameCategories(gameCategory));
         try {
             sessionFactory.getCurrentSession().update(game);
-            //TODO categories
             //TODO image
         }catch (Exception e){
             LOGGER.warning("Error in updateGame - " + e.getMessage());

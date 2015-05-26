@@ -3,11 +3,21 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="pl.edu.pw.elka.pik.model">
-    <class name="pl.edu.pw.elka.pik.model.Game" table="Games" >
+    <class name="pl.edu.pw.elka.pik.model.db.Game" table="Games" >
         <id name="id" column="id" type="java.lang.Integer">
             <generator class="native"/>
         </id>
         <property name="name" column="name" type="java.lang.String" />
         <property name="description" column="description" type="java.lang.String" />
+        <set name="categories" table="GameCategories" lazy="true" fetch="select" cascade="all">
+            <key column="game_id" not-null="true" />
+            <many-to-many entity-name="pl.edu.pw.elka.pik.model.db.Category" column="category_id" not-found="exception"/>
+        </set>
+    </class>
+    <class name="pl.edu.pw.elka.pik.model.db.Category" table="Categories" >
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name" type="java.lang.String" />
     </class>
 </hibernate-mapping>

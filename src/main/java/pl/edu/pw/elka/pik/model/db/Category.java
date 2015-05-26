@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.pik.model;
+package pl.edu.pw.elka.pik.model.db;
 
 import java.io.Serializable;
 
