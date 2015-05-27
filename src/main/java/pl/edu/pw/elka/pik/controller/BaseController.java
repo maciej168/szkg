@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import pl.edu.pw.elka.pik.dao.CategoryDAO;
 import pl.edu.pw.elka.pik.dao.GameDAO;
 import pl.edu.pw.elka.pik.model.CategorySimpleItem;
 
@@ -32,10 +33,13 @@ public class BaseController {
     @Autowired
     private GameDAO gameDAO;
 
+    @Autowired
+    private CategoryDAO categoryDAO;
+
     @RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)
     public void getCategoryList(HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {
-        List<CategorySimpleItem> category = gameDAO.getCategoryList();
+        List<CategorySimpleItem> category = categoryDAO.getCategoryList();
         write(response.getOutputStream(), category);
     }
 }

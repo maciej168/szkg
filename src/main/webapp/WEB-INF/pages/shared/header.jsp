@@ -65,7 +65,7 @@
                 </li>
                 <li><a href="/wishList"><spring:message code="header.wish.list"/></a>
                 </li>
-                <li><a href="/category"><spring:message code="header.category"/></a>
+                <li><a href="/categoryList"><spring:message code="header.category"/></a>
                 </li>
             </ul>
         </div>

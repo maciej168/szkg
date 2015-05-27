@@ -23,8 +23,6 @@ public interface GameDAO {
 
     GameDetailItem getGameDetail(int gameId);
 
-    List<CategorySimpleItem> getCategoryList();
-
     int createGame(String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image);
 
     void updateGame(int gameId, String gameTitle, List<Integer> gameCategory, String gameDescription, byte[] image);

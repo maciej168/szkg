@@ -146,20 +146,6 @@ public class GameDAOImpl implements GameDAO {
         return detailItem;
     }
 
-    @Override
-    @Transactional
-    public List<CategorySimpleItem> getCategoryList() {
-        List<Category> ctg = sessionFactory.getCurrentSession()
-                .createCriteria(Category.class)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-
-        List<CategorySimpleItem> categorys = new ArrayList<CategorySimpleItem>();
-        for(Category c : ctg){
-            categorys.add(new CategorySimpleItem(c));
-        }
-        return categorys;
-    }
-
     private Set<Category> getGameCategories(Collection<Integer> categoryIds){
         List<Category> ctg = sessionFactory.getCurrentSession()
                 .createCriteria(Category.class)
